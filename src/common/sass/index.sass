@@ -1,0 +1,110 @@
+// @font-face 
+//   font-family: 'ARYuanGBBold'
+//   src: url('~@/common/小清新中文.TTF')
+//   font-weight: normal
+//   font-style: normal
+
+// @mixin fontOnly 
+//   font-family: 'ARYuanGBBold' !important
+//   font-size: 16px
+  
+// 清除浮动
+@mixin clearfix
+  display: inline-block
+  &:after
+    display: block
+    content: "·"
+    height: 0
+    line-height: 0
+    clear: both
+    visibility: hidden
+
+// 设置头像圆形
+@mixin avatar($px)
+  display: inline-block
+  width: $px + px
+  height: $px + px
+  border-radius: 50%
+  font-size: 0
+  overflow: hidden
+  img
+    width: $px + px
+    height: $px + px
+
+// 设置正方形
+@mixin square($px) 
+  width: $px + px
+  height: $px + px
+
+// 设置矩形
+@mixin square2($px, $px2) 
+  width: $px + px
+  height: $px2 + px
+
+// 设置圆角
+@mixin radius($px) 
+  border-radius: $px + px
+
+// 换行
+@mixin lineWrap($num) 
+  overflow: hidden
+  text-overflow: ellipsis
+  display: -webkit-box
+  -webkit-line-clamp: $num
+  -webkit-box-orient: vertical
+
+// 超出显示省略号
+@mixin text-overflow
+  width: 100%
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+
+@mixin x-scroll
+  overflow-y: hidden
+  overflow-x: scroll
+  -webkit-overflow-scrolling: touch
+  white-space: nowrap
+
+@mixin y-scroll
+  overflow-x: hidden
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch
+// 扩展点击区域
+@mixin extend-click
+    position: relative
+    &:after 
+        content: ''
+        position: absolute
+        top: -10px
+        left: -10px
+        right: -10px
+        bottom: -10px
+// 强制换行
+@mixin break-word
+  word-wrap: break-word
+  white-space: normal
+
+// 盒模型
+@mixin border-box
+  box-sizing: border-box
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+
+@mixin display-flex
+  display: flex
+
+@mixin flex-column
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -ms-flex-direction: column
+  flex-direction: column
+
+@mixin flex()
+    display: flex
+
+@mixin items()
+    align-items: center
+
+@mixin box()
+    box-sizing: border-box
