@@ -6,6 +6,7 @@ import Index from '@/view/layout/index.vue'
 import adminUser from './adminUser'
 import adminRole from './adminRole'
 import menu from './menu'
+import schedule from './schedule'
 
 
 
@@ -35,7 +36,8 @@ const routes = [
   },
   ...adminUser,
   ...adminRole,
-  ...menu
+  ...menu,
+  ...schedule
 ]
 
 export { routes }
