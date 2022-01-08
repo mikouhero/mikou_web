@@ -1,13 +1,14 @@
 <style>
 .wrapper > .header > h3 {
   font-size: 18px;
+  margin-bottom: 20px;
 }
 </style>
 
 <template>
   <el-row class="wrapper">
     <el-col class="header">
-      <h3>计划任务</h3>
+      <h3 >计划任务</h3>
 
       <el-form inline size="small">
         <el-form-item label="名称：">
