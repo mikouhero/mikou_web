@@ -1,5 +1,5 @@
 
-let url = process.env.NODE_ENV == 'production' ? '' : 'https://yili-weclass-test.woaap.com'
+let url = process.env.NODE_ENV == 'production' ? '' : '域名'
 console.log(process.env.NODE_ENV)
 
 export default {

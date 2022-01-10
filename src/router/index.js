@@ -7,6 +7,8 @@ import adminUser from './adminUser'
 import adminRole from './adminRole'
 import menu from './menu'
 import schedule from './schedule'
+import tools from './tools'
+
 
 
 
@@ -34,10 +36,13 @@ const routes = [
     leaf: true,
     hidden: true,
   },
+
+
   ...adminUser,
   ...adminRole,
   ...menu,
-  ...schedule
+  ...schedule,
+  ...tools
 ]
 
 export { routes }
