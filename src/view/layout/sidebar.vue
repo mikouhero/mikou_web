@@ -45,7 +45,7 @@
       :background-color="bg"
       :text-color="tc"
       :active-text-color="atc"
-      router=""
+      router
     >
       <template v-if="menulist.length">
         <template v-for="(item, index) in menulist">

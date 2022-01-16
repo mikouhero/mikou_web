@@ -8,11 +8,11 @@
 <template>
   <el-row class="wrapper">
     <el-col class="header">
-      <h3 >计划任务</h3>
+      <h3>计划任务</h3>
 
       <el-form inline size="small">
         <el-form-item label="名称：">
-          <el-input placeholder="请输入名称"></el-input>
+          <el-input placeholder="请输入名称" v-model="name"></el-input>
         </el-form-item>
 
         <el-form-item label="任务分组">
@@ -164,9 +164,9 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="目标参数" prop="param">
+        <el-form-item label="目标参数" prop="args">
           <el-input
-            v-model="addForm.param"
+            v-model="addForm.args"
             placeholder="目标参数"
             clearable
             required
@@ -186,8 +186,8 @@
           <el-col :span="12">
             <el-form-item label="是否并发" prop="concurrent">
               <el-radio-group v-model="addForm.concurrent" size="small">
-                <el-radio-button label="1">允许</el-radio-button>
-                <el-radio-button label="2"> 禁止</el-radio-button>
+                <el-radio-button label="0">禁止</el-radio-button>
+                <el-radio-button label="1"> 允许</el-radio-button>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -195,8 +195,8 @@
 
         <el-form-item label="调用类型" prop="type">
           <el-radio-group v-model="addForm.type" size="small">
-            <el-radio-button label="1">接口</el-radio-button>
-            <el-radio-button label="2"> 函数</el-radio-button>
+            <el-radio-button label="0">接口</el-radio-button>
+            <el-radio-button label="1"> 函数</el-radio-button>
           </el-radio-group>
         </el-form-item>
 
@@ -230,10 +230,10 @@
         </el-button>
       </span>
     </el-dialog>
-
   </el-row>
 </template>
 <script>
+import { job_list, job_add, job_edit, job_del } from "@/api/job";
 export default {
   data() {
     return {
@@ -242,6 +242,7 @@ export default {
       total: 0,
       group: "",
       status: "",
+      name: "",
 
       groupList: [
         { value: 0, label: "默认", name: "默认" },
@@ -258,7 +259,7 @@ export default {
       init_add_form: {
         strategy: 1,
         type: 1,
-        concurrent: 2,
+        concurrent: 1,
       },
       addForm: {},
       title: "",
@@ -281,42 +282,24 @@ export default {
 
   methods: {
     async getTableData(reset = false) {
-      this.tableData = [
-        {
-          id: 1,
-          name: "111",
-          group: 1,
-          status: 0,
-          target: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-          param: "xxx",
-          cron: "* * * * * *",
-          strategy: 1,
-          type: 1,
-          concurrent: 2,
-        },
-        {
-          id: 2,
-          name: "222",
-          group: 1,
-          status: 0,
-          target: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-          cron: "* * * * * *",
-          strategy: 1,
-          type: 1,
-          concurrent: 2,
-        },
-        {
-          id: 3,
-          name: "3333",
-          group: 1,
-          status: 0,
-          target: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-          cron: "* * * * * *",
-          strategy: 1,
-          type: 1,
-          concurrent: 2,
-        },
-      ];
+      let res = await job_list({
+        page: this.page,
+        page_size: this.pageSize,
+        name: this.name,
+        group: this.group,
+        sttaus: this.status,
+      });
+
+      if (!res.list) {
+        if (this.tableData.length) {
+          // data或lists为null时清理有内容的列表
+          this.tableData = [];
+          this.total = 0;
+        }
+      } else {
+        this.tableData = res.list;
+        this.total = res.pager.total_rows;
+      }
     },
     // 分页器组件
     handleSizeChange(val) {
@@ -353,8 +336,9 @@ export default {
     },
     async _add() {
       //todo 接口 返回id
-
-      let taskId = 10;
+      let res = await job_add(this.addForm);
+      console.log(res);
+      let taskId = res.data.id;
       this.addForm.id = taskId;
       this.tableData.push(this.addForm);
       this.addForm = {};
@@ -367,6 +351,8 @@ export default {
     async _edit() {
       //  todo 接口
 
+      let res = await job_edit(this.addForm);
+      console.log(res);
       //       this.tableData[this.edit_index]  = this.addForm   // 无效
       //       this.tableData.splice(this.edit_index, 1, this.addForm);  // 有效
       this.$set(this.tableData, this.edit_index, this.addForm); // 有效
@@ -395,7 +381,11 @@ export default {
         type: "warning",
       }).then(() => {
         //todo 接口
-
+        let res = job_edit({
+          id: id,
+          status: 0,
+        });
+        console.log(res);
         const obj = this.tableData.find((item) => {
           return item.id == id;
         });
@@ -415,7 +405,10 @@ export default {
       })
         .then(() => {
           //todo 接口
-
+          let res = job_del({
+            id: id,
+          });
+          console.log(res);
           this.tableData.splice(key, 1);
           this.$message({
             type: "success",
@@ -436,7 +429,11 @@ export default {
         type: "success",
       }).then(() => {
         //todo 接口
-
+        let res = job_edit({
+          id: id,
+          status: 1,
+        });
+        console.log(res);
         const obj = this.tableData.find((item) => {
           return item.id == id;
         });

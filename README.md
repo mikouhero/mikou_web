@@ -1,6 +1,6 @@
-# pandora_pim
+# mikou_web
 
->  pandora pim 
+>  mikou web 
 
 ## Build Setup
 

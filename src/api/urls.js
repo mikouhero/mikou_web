@@ -34,5 +34,10 @@ export default {
     menu_delete: `/admin/menu/delete`,
     menu_detail: `/admin/menu/find`,
 
-    //权限管理
+
+    job_list: `/admin/job/list`,
+    job_add: `/admin/job/create`,
+    job_edit: `/admin/job/update`,
+    job_del: `/admin/job/delete`,
+
 }
